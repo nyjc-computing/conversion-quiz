@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+
+{% block title %}Revieww{% endblock %}
+
+{% block header %}Binary/decimal conversion quiz{% endblock %}
+
+{% block body %}
+<table>
+    <tr>
+        <th class="qn-col"><label for="student-name">Name:</label></th>
+        <td class="abs-col"><span id="student-name">{{ name }}</span></td>
+    </tr>
+    <tr>
+        <th class="qn-col">Time taken:</th>
+        <td class="abs-col">{{time_taken // 60}} min {{time_taken % 60}} sec</td>
+    </tr>
+</table>
+
+<h2>Part 1</h2>
+<p>Convert each of the following numbers in binary into decimal form.</p>
+
+<table class="table">
+    <tr class="header-row">
+        <th scope="col" class="num-col">Question</th>
+        <th scope="col" class="qn-col">Binary</th>
+        <th scope="col" class="ans-col">Your Answer</th>
+        <th scope="col" class="ans-col">Correct Answer</th>
+        <th scope="col" class="review-col">Result</th>
+    </tr>
+    {% for label, question, user_ans, correct, actual, review in binresult %}
+    <tr>
+        <th scope="row" class="num-col">{{ label.upper() }}</th>
+        <td class="qn-col"><label for="{{ label }}">{{ question }}</label></td>
+        <td class="ans-col">{{ user_ans }}</td>
+        <td class="ans-col">{{ actual }}</td>
+        <td class="review-col">
+        {% if correct %}
+            <span class="correct">{{ review }}</span>
+        {% else %}
+            <span class="incorrect">{{ review }}</span>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    
+</table>
+
+<h2>Part 2</h2>
+<p>Convert each of the following numbers in decimal into binary form.</p>
+
+<table class="table">
+    <tr class="header-row">
+        <th scope="col" class="num-col">Question</th>
+        <th scope="col" class="qn-col">Decimal</th>
+        <th scope="col" class="ans-col">Your Answer</th>
+        <th scope="col" class="ans-col">Correct Answer</th>
+        <th scope="col" class="review-col">Result</th>
+    </tr>
+    {% for label, question, user_ans, correct, actual, review in decresult %}
+    <tr>
+        <th scope="row" class="num-col">{{ label.upper() }}</th>
+        <td class="qn-col"><label for="{{ label }}">{{ question }}</label></td>
+        <td class="ans-col">{{ user_ans }}</td>
+        <td class="ans-col">{{ actual }}</td>
+        <td class="review-col">
+        {% if correct %}
+            <span class="correct">{{ review }}</span>
+        {% else %}
+            <span class="incorrect">{{ review }}</span>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div>
+    <p><a href="/">Try again</a></p>
+</div>
+{% endblock %}

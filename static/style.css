@@ -1,0 +1,29 @@
+h1 {
+    margin: 0.5em 0;
+}
+
+h2 {
+    margin: 1.15em 0 0.7em;
+}
+
+#name-entry {
+    margin-bottom: 5em;
+}
+
+#submit-entry {
+    margin: 1em 0;
+    text-align: center;
+}
+
+.num-col, .qn-col, .ans-col, .bin-col, .dec-col, .hex-col {
+    text-align: center;
+    padding: 2pt 10pt;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: darkred
+}

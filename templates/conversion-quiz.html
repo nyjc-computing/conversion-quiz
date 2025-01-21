@@ -1,0 +1,55 @@
+{% macro qn_td(type, text) -%}
+    <td class="{{ type }}-col qn">{{ text }}</td>
+{%- endmacro %}
+
+{% macro ans_td(type, label) -%}
+    <td class="{{ type }}-col ans">
+        <input class="ans" type="text" name="row-{{ label }}-{{ type }}">
+    </td>
+{%- endmacro %}
+
+{% extends "index.html" %}
+
+{% block title %}Quizz{% endblock %}
+
+{% block header %}Binary/decimal conversion quiz{% endblock %}
+
+{% block body %}
+<div id="name-entry">
+<table>
+    <tr>
+        <th class="qn-col"><label for="student-name">Name:</label></th>
+        <td class="ans-col"><input id="student-name" type="text" name="student_name" /></td>
+    </tr>    
+</table>
+</div>
+
+<p>Complete the table by converting the given values.</p>
+
+<table class="table">
+    <tr class="header-row">
+        <th scope="col" class="num-col">Question</th>
+        <th scope="col" class="bin-col">Binary</th>
+        <th scope="col" class="dec-col">Decimal</th>
+        <th scope="col" class="hex-col">Hexadecimal</th>
+    </tr>
+    {% for qn in questions %}
+    <tr class="qn-row" id="row-{{ qn.label }}">
+        <th scope="row" class="num-col">{{ qn.label }}</th>
+        {% for td_type in ("bin", "dec", "hex") %}
+            {% if qn.type == td_type %}
+                {{ qn_td(td_type, qn.value) }}
+            {% else %}
+                {{ ans_td(td_type, qn.label) }}
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    
+</table>
+
+<div id="submit-entry">
+    <input id="start-time" type="hidden" name="start_time" value="{{ start_time }}" />
+    <button id="check-my-ans" type="button" onclick="checkMyAns();">Check My Answers</button>
+</div>
+{% endblock %}

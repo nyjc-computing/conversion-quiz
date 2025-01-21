@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+
+{% block title %}Quizz{% endblock %}
+
+{% block header %}Binary/decimal conversion quiz{% endblock %}
+
+{% block body %}
+<form action="{{ url_for("bindec_results") }}" method="post">
+<div id="name-entry">
+<table>
+    <tr>
+        <th class="qn-col"><label for="student-name">Name:</label></th>
+        <td class="ans-col"><input id="student-name" type="text" name="student_name" /></td>
+    </tr>    
+</table>
+</div>
+
+<h2>Part 1</h2>
+<p>Convert each of the following numbers in binary into decimal form.</p>
+
+<table class="table">
+    <tr class="header-row">
+        <th scope="col" class="num-col">Question</th>
+        <th scope="col" class="qn-col">Binary</th>
+        <th scope="col" class="ans-col">Decimal</th>
+    </tr>
+    {% for label, question in binqn.items() %}
+    <tr>
+        <th scope="row" class="num-col">{{ label.upper() }}</th>
+        <td class="qn-col"><label for="{{ label }}">{{ question }}</label></td>
+        <td class="ans-col">
+            <input id="{{ label }}"
+                   type="text"
+                   name="0b{{ question }}"
+                   value=""
+                   placeholder="Your answer"/>
+        </td>
+    </tr>
+    {% endfor %}
+    
+</table>
+
+<h2>Part 2</h2>
+<p>Convert each of the following numbers in decimal into binary form.</p>
+
+<table class="table">
+    <tr class="header-row">
+        <th scope="col" class="num-col">Question</th>
+        <th scope="col" class="qn-col">Decimal</th>
+        <th scope="col" class="ans-col">Binary</th>
+    </tr>
+    {% for label, question in decqn.items() %}
+    <tr>
+        <th scope="row" class="num-col">{{ label.upper() }}</th>
+        <td class="qn-col"><label for="{{ label }}">{{ question }}</label></td>
+        <td class="ans-col">
+            <input id="{{ label }}"
+                   type="text"
+                   name="{{ question }}"
+                   value=""
+                   placeholder="Your answer"/>
+        </td>
+    </tr>
+    {% endfor %}
+    
+</table>
+<div id="submit-entry">
+    <input type="hidden" name="start_time" value="{{ start_time }}" />
+    <input type="submit" value="Check My Answers" />
+</div>
+</form>
+{% endblock %}

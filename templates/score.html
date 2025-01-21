@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block title %}Scoree{% endblock %}
+
+{% block header %}Binary/decimal conversion scores{% endblock %}
+
+{% block body %}
+<table class="table">
+    <tr class="header-row">
+        <th scope="col">Timestamp</th>
+        <th scope="col">Name</th>
+        <th scope="col" class="ans-col">Score (Binary)</th>
+        <th scope="col" class="ans-col">Score (Decimal)</th>
+    </tr>
+    {% for record in scores %}
+    <tr>
+        <th scope="row" class="num-col">{{ record.timestamp }}</th>
+        <td class="qn-col">{{ record.name }}</td>
+        <td class="ans-col">{{ record.bin_score }}</td>
+        <td class="ans-col">{{ record.dec_score }}</td>
+    </tr>
+    {% endfor %}
+    
+<div>
+    <p><a href="/">Return to main</a></p>
+</div>
+{% endblock %}
