@@ -71,7 +71,8 @@ function checkQn(tr) {
 }
 
 function timeTaken() {
-    let startTime = new Date(document.querySelector("#start-time").value.trimRight('Z') + '+0000');
+    let startTimeStr = document.querySelector("input[name='start_time']").value;
+    let startTime = new Date(startTimeStr);
     let duration = Math.floor((new Date() - startTime) / 1000);  // seconds
     let [min, sec] = [Math.floor(duration / 60), duration % 60]
     return `${min} min ${sec} sec`
