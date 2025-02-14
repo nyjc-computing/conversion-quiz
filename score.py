@@ -38,11 +38,12 @@ def add_score(name: str, bin_score: int, dec_score: int, hex_score: int) -> None
     scores.append(
         record(name, bin_score, dec_score, hex_score)
     )
-    # db[DBNAME] = scores
+    db[DBNAME] = scores  # Persist the change
 
 def delete_score(index: int) -> bool:
     scores = db[DBNAME]
     if 0 <= index < len(scores):
         del scores[index]
+        db[DBNAME] = scores  # Persist the change
         return True
     return False
