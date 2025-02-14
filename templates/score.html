@@ -12,6 +12,11 @@
         <th scope="col" class="ans-col">Score (Binary)</th>
         <th scope="col" class="ans-col">Score (Decimal)</th>
     </tr>
+    {% if not scores %}
+    <tr>
+        <td colspan="4" class="no-scores">No scores yet.</td>
+    </tr>
+    {% endif %}
     {% for record in scores %}
     <tr>
         <th scope="row" class="num-col">{{ record.timestamp }}</th>
