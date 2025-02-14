@@ -93,17 +93,38 @@ function addDuration() {
 
 function checkMyAns() {
     addDuration();
-    document.querySelector("div#name-entry #student-name").disabled = true;    
-    document.querySelectorAll("table.table tr.qn-row")
-    .forEach(checkQn);
+    let name = document.querySelector("div#name-entry #student-name");
+    name.disabled = true;
+    
+    let correctCount = 0;
+    document.querySelectorAll("table.table tr.qn-row").forEach(tr => {
+        checkQn(tr);
+        if (tr.querySelectorAll('.correct').length > 0) {
+            correctCount++;
+        }
+    });
 
-    let button = document.querySelector("button#check-my-ans");
-    button.innerHTML = 'Try Again';
-    button.onclick = () => window.location.reload();
+    // Create form data
+    let formData = new FormData();
+    formData.append('student_name', name.value);
+    formData.append('start_time', document.querySelector("#start-time").value);
+    formData.append('score', correctCount);
 
-    let help = document.createElement('p');
-    help.innerHTML = '<a href="https://docs.google.com/spreadsheets/d/1X9LyBvEeUTKbi-ETXkBdmfxnvCdC8m2QuXX0AElI7LQ/edit?usp=share_link" target="_blank">How do I convert between binary, decimal, and hexadecimal?</a><br />(NYJC Google login required)'
-    document.querySelector("div#submit-entry").insertBefore(help, button);
+    // Send to server
+    fetch('/scores', {
+        method: 'POST',
+        body: formData
+    }).then(response => {
+        if (response.ok) {
+            let button = document.querySelector("button#check-my-ans");
+            button.innerHTML = 'Try Again';
+            button.onclick = () => window.location.reload();
+
+            let help = document.createElement('p');
+            help.innerHTML = '<a href="https://docs.google.com/spreadsheets/d/1X9LyBvEeUTKbi-ETXkBdmfxnvCdC8m2QuXX0AElI7LQ/edit?usp=share_link" target="_blank">How do I convert between binary, decimal, and hexadecimal?</a><br />(NYJC Google login required)'
+            document.querySelector("div#submit-entry").insertBefore(help, button);
+        }
+    });
 }
 
 window.onload = () => document

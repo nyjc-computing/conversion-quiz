@@ -100,8 +100,14 @@ def conversion_quiz():
                                  start_time=utils.time.get_timestamp(),
                                  questions=questions)
     
-@app.route("/scores")
+@app.route("/scores", methods=["GET", "POST"])
 def scores():
+    if flask.request.method == "POST":
+        name = flask.request.form.get("student_name")
+        start_time = flask.request.form.get("start_time")
+        score_value = int(flask.request.form.get("score", 0))
+        score.add_score(name=name, bin_score=0, dec_score=score_value)
+        return "OK", 200
     scores = score.load()
     return flask.render_template("score.html", scores=scores)
 
