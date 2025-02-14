@@ -112,6 +112,11 @@ def scores():
         score.add_score(name=name, bin_score=bin_score, dec_score=dec_score, hex_score=hex_score)
         return "OK", 200
     scores = score.load()
+    # Format timestamps to be more readable
+    for record in scores:
+        timestamp = record['timestamp']
+        formatted_time = timestamp.replace('T', ' at ').split('.')[0]
+        record['timestamp'] = formatted_time
     return flask.render_template("score.html", scores=scores)
 
 @app.route("/scores/delete/<int:index>", methods=["POST"])
