@@ -31,7 +31,11 @@ def record(name: str, bin_score: int, dec_score: int) -> Dict:
     }
 
 def add_score(name: str, bin_score: int, dec_score: int) -> None:
-    db[DBNAME].append(record(name, bin_score, dec_score))
+    if not db.get(DBNAME):
+        db[DBNAME] = []
+    scores = db[DBNAME]
+    scores.append(record(name, bin_score, dec_score))
+    db[DBNAME] = scores
 
 def delete_score(index: int) -> bool:
     scores = db[DBNAME]
