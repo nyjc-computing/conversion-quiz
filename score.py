@@ -1,26 +1,34 @@
-from datetime import datetime
-import json
 from typing import List, Dict
 
-DBNAME = "scores.json"
+from replit import db
+
+import utils.time
+
+DBNAME = "scores"
+
+def copy(scores: List[Dict]) -> List[Dict]:
+    """Return a copy of the given list of scores.
+
+    Replit DB returns wrappers around db entries, which we want to 
+    avoid passing around to prevent inadvertent mutation.
+    """
+    return [dict(score) for score in scores]
 
 def load() -> List[Dict]:
-    with open("scores.json", "r") as f:
-        return json.load(f)
+    if not db.get(DBNAME):
+        db[DBNAME] = []
+    return copy(db[DBNAME])
 
 def save(scores: List[Dict]) -> None:
-    with open("scores.json", "w") as f:
-        json.dump(scores, f, indent=4)
+    raise NotImplementedError
 
 def record(name: str, bin_score: int, dec_score: int) -> Dict:
     return {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": utils.time.get_timestamp(),
         "name": name,
         "bin_score": bin_score,
         "dec_score": dec_score,
     }
 
 def add_score(name: str, bin_score: int, dec_score: int) -> None:
-    scores = load()
-    scores.append(record(name, bin_score, dec_score))
-    save(scores)
+    db[DBNAME].append(record(name, bin_score, dec_score))

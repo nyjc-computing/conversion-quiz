@@ -1,10 +1,10 @@
-from datetime import datetime
 from typing import List
 
 import flask
 
 import conversion
 import score
+import utils.time
 
 app = flask.Flask(__name__)
 
@@ -28,7 +28,7 @@ def home():
             decqn[f"d{i}"] = value
             i += 1
     return flask.render_template("bindecquiz.html",
-                                 start_time=datetime.utcnow().isoformat(),
+                                 start_time=utils.time.get_timestamp(),
                                  binqn=binqn,
                                  decqn=decqn)
 
@@ -37,8 +37,9 @@ def home():
 def bindec_results():
     record = dict(flask.request.form)
     name = record.pop("student_name")
-    start_time = datetime.fromisoformat(record.pop("start_time"))
-    duration = (datetime.utcnow() - start_time).seconds
+    start_time = record.pop("start_time")
+    dt_start = utils.time.get_datetime(start_time)
+    duration = (utils.time.utcnow() - dt_start).seconds
     binresult = []
     decresult = []
     i, prefix = 1, "b"
@@ -96,7 +97,7 @@ def bindec_results():
 def conversion_quiz():
     questions = conversion.generate_questions(5)
     return flask.render_template("conversion-quiz.html",
-                                 start_time=datetime.utcnow().isoformat(),
+                                 start_time=utils.time.get_timestamp(),
                                  questions=questions)
     
 @app.route("/scores")
