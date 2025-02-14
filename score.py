@@ -32,3 +32,11 @@ def record(name: str, bin_score: int, dec_score: int) -> Dict:
 
 def add_score(name: str, bin_score: int, dec_score: int) -> None:
     db[DBNAME].append(record(name, bin_score, dec_score))
+
+def delete_score(index: int) -> bool:
+    scores = db[DBNAME]
+    if 0 <= index < len(scores):
+        scores.pop(index)
+        db[DBNAME] = scores
+        return True
+    return False

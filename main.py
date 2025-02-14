@@ -105,6 +105,12 @@ def scores():
     scores = score.load()
     return flask.render_template("score.html", scores=scores)
 
+@app.route("/scores/delete/<int:index>", methods=["POST"])
+def delete_score(index):
+    if score.delete_score(index):
+        return flask.redirect("/scores")
+    return "Invalid index", 400
+
 
 if __name__ == "__main__":
     app.run('0.0.0.0')
