@@ -31,12 +31,12 @@ def record(name: str, bin_score: int, dec_score: int, hex_score: int) -> Dict:
         "hex_score": hex_score,
     }
 
-def add_score(name: str, bin_score: int, dec_score: int) -> None:
+def add_score(name: str, bin_score: int, dec_score: int, hex_score: int) -> None:
     if not db.get(DBNAME):
         db[DBNAME] = []
     scores = db[DBNAME]
     scores.append(
-        record(name, bin_score, dec_score)
+        record(name, bin_score, dec_score, hex_score)
     )
     # db[DBNAME] = scores
 
