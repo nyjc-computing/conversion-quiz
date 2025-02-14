@@ -39,7 +39,11 @@ def bindec_results():
     name = record.pop("student_name")
     start_time = record.pop("start_time")
     dt_start = utils.time.get_datetime(start_time)
-    duration = (utils.time.utcnow() - dt_start).seconds
+    duration_seconds = (utils.time.utcnow() - dt_start).total_seconds()
+    duration = {
+        'minutes': int(duration_seconds // 60),
+        'seconds': int(duration_seconds % 60)
+    }
     binresult = []
     decresult = []
     i, prefix = 1, "b"
