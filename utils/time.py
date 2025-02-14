@@ -1,7 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 def utcnow() -> datetime:
-    return datetime.now(datetime.UTC)
+    return datetime.now(timezone.utc)
 
 def get_timestamp() -> str:
   """Return the current timestamp in ISO format."""
