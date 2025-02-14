@@ -9,8 +9,9 @@
     <tr class="header-row">
         <th scope="col">Timestamp</th>
         <th scope="col">Name</th>
-        <th scope="col" class="ans-col">Score (Binary)</th>
-        <th scope="col" class="ans-col">Score (Decimal)</th>
+        <th scope="col" class="ans-col">Binary</th>
+        <th scope="col" class="ans-col">Decimal</th>
+        <th scope="col" class="ans-col">Hex</th>
     </tr>
     {% if not scores %}
     <tr>
@@ -23,6 +24,7 @@
         <td class="qn-col">{{ record.name }}</td>
         <td class="ans-col">{{ record.bin_score }}</td>
         <td class="ans-col">{{ record.dec_score }}</td>
+        <td class="ans-col">{{ record.hex_score }}</td>
         <td>
             <form method="POST" action="/scores/delete/{{loop.index0}}" onsubmit="return confirm('Delete this score?');" style="display:inline">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>

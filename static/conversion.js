@@ -96,11 +96,11 @@ function checkMyAns() {
     let name = document.querySelector("div#name-entry #student-name");
     name.disabled = true;
     
-    let correctCount = 0;
     document.querySelectorAll("table.table tr.qn-row").forEach(tr => {
         checkQn(tr);
         if (tr.querySelectorAll('.correct').length > 0) {
-            correctCount++;
+            let qType = getType(tr.querySelector('.qn').className);
+            formData.append('correct_types[]', qType);
         }
     });
 
@@ -108,7 +108,6 @@ function checkMyAns() {
     let formData = new FormData();
     formData.append('student_name', name.value);
     formData.append('start_time', document.querySelector("#start-time").value);
-    formData.append('score', correctCount);
 
     // Send to server
     fetch('/scores', {

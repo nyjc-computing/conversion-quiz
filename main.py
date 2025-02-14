@@ -105,8 +105,11 @@ def scores():
     if flask.request.method == "POST":
         name = flask.request.form.get("student_name")
         start_time = flask.request.form.get("start_time")
-        score_value = int(flask.request.form.get("score", 0))
-        score.add_score(name=name, bin_score=0, dec_score=score_value)
+        correct_answers = flask.request.form.getlist("correct_types[]")
+        bin_score = sum(1 for ans in correct_answers if ans == "bin")
+        dec_score = sum(1 for ans in correct_answers if ans == "dec") 
+        hex_score = sum(1 for ans in correct_answers if ans == "hex")
+        score.add_score(name=name, bin_score=bin_score, dec_score=dec_score, hex_score=hex_score)
         return "OK", 200
     scores = score.load()
     return flask.render_template("score.html", scores=scores)

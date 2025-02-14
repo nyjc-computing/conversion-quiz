@@ -22,12 +22,13 @@ def load() -> List[Dict]:
 def save(scores: List[Dict]) -> None:
     raise NotImplementedError
 
-def record(name: str, bin_score: int, dec_score: int) -> Dict:
+def record(name: str, bin_score: int, dec_score: int, hex_score: int) -> Dict:
     return {
         "timestamp": utils.time.get_timestamp(),
         "name": name,
         "bin_score": bin_score,
         "dec_score": dec_score,
+        "hex_score": hex_score,
     }
 
 def add_score(name: str, bin_score: int, dec_score: int) -> None:
