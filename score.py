@@ -34,13 +34,14 @@ def add_score(name: str, bin_score: int, dec_score: int) -> None:
     if not db.get(DBNAME):
         db[DBNAME] = []
     scores = db[DBNAME]
-    scores.append(record(name, bin_score, dec_score))
-    db[DBNAME] = scores
+    scores.append(
+        record(name, bin_score, dec_score)
+    )
+    # db[DBNAME] = scores
 
 def delete_score(index: int) -> bool:
     scores = db[DBNAME]
     if 0 <= index < len(scores):
-        scores.pop(index)
-        db[DBNAME] = scores
+        del scores[index]
         return True
     return False
