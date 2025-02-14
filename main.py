@@ -39,11 +39,7 @@ def bindec_results():
     name = record.pop("student_name")
     start_time = record.pop("start_time")
     dt_start = utils.time.get_datetime(start_time)
-    duration_seconds = (utils.time.utcnow() - dt_start).total_seconds()
-    duration = {
-        'minutes': int(duration_seconds // 60),
-        'seconds': int(duration_seconds % 60)
-    }
+    duration_seconds = int((utils.time.utcnow() - dt_start).total_seconds())
     binresult = []
     decresult = []
     i, prefix = 1, "b"
@@ -91,7 +87,7 @@ def bindec_results():
                     dec_score=calc_score(decresult))
     return flask.render_template("review.html",
                                  name=name,
-                                 time_taken=duration,
+                                 time_taken=duration_seconds,
                                  binresult=binresult,
                                  decresult=decresult)
 
